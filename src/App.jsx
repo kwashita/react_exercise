@@ -4,6 +4,7 @@ import React, {
   useEffect,
   createContext,
   useContext,
+  useCallback,
 } from "react";
 import Child from "./Child";
 import SubChild from "./SubChild";
@@ -16,8 +17,10 @@ const App = () => {
   //     console.log("mounted");
   //   });
   useEffect(() => {
-    console.log("num changed");
+    // console.log("num changed");
   }, [num]);
+
+  const callbackChange = useCallback(() => setNum((num) => num + 1), []);
 
   return (
     <>
@@ -25,9 +28,11 @@ const App = () => {
       <button onClick={() => setNum(num + 1)}>change Msg</button>
       <hr />
       {/* <Child num={num} setNum={setNum} /> */}
-      <NumContext.Provider value={{ num, setNum }}>
+      <NumContext.Provider value={{ num, callbackChange }}>
         <SubChild />
       </NumContext.Provider>
+      <hr />
+      <Child callbackChange={callbackChange}></Child>
     </>
   );
 };

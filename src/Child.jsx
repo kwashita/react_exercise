@@ -1,13 +1,20 @@
-import React from "react";
+import React, { memo } from "react";
 import SubChild from "./SubChild";
-import { NumContext } from "./index";
-export default function Child(props) {
+
+export default memo(function Child(props) {
+  console.log("child updated");
   return (
     <>
-      <div>Child: {props.num}</div>
-      <button onClick={() => props.setNum(props.num + 1)}>change Num</button>
+      <div>Child: myself</div>
+      <button
+        onClick={() => {
+          props.callbackChange();
+        }}
+      >
+        change Num in App
+      </button>
       <hr />
-      <SubChild></SubChild>
+      {/* <SubChild></SubChild> */}
     </>
   );
-}
+});
